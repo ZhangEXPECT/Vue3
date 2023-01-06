@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        // 源数据
+        let person = {
+            name: '张三',
+            age: '18'
+        }
+        // vue2数据绑定
+        /*       let p = {}
+            Object.defineProperty(p, 'name', {
+                 configurable: true,//可配置的对象
+                 get() {
+                     return person.name;
+                 },
+                 set(value) {
+                     person.name = value;
+                 }
+             }); */
+
+        // vue3实现响应式
+        // proxy代理，监听数据的变化
+        let p = new Proxy(person, {
+            get(target,propName) {
+                console.log("read",target[propName]);
+               return target[propName];
+            },
+            set(target,propName,value){
+                console.log("update",target[propName]);
+                return target[propName] = value;
+            },
+            deleteProperty(target,propName){
+                console.log("delete",target[propName]);
+                
+                return  delete target[propName];
+            }
+            
+        });
+
+        //题外：
+        
+
+        						
+    </script>
+</body>
+
+</html>
